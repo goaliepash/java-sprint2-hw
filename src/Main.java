@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    private static final String RESOURCES_PATH = "resources";
+
     private static final Scanner scanner = new Scanner(System.in);
     private static final Accounting accounting = new Accounting(2021);
 
@@ -51,7 +53,7 @@ public class Main {
 
     private static void readAllMonthlyReports() {
         for (int i = 1; i <= 3; i++) {
-            String csvMonthlyReport = readFileContentsOrNull("resources/m.20210" + i + ".csv");
+            String csvMonthlyReport = readFileContentsOrNull(Path.of(RESOURCES_PATH, "m.20210" + i + ".csv"));
             if (csvMonthlyReport != null) {
                 accounting.addMonthlyReport(i, csvMonthlyReport);
             }
@@ -59,19 +61,18 @@ public class Main {
     }
 
     private static void readYearlyReport() {
-        String csvYearlyReport = readFileContentsOrNull("resources/y.2021.csv");
+        String csvYearlyReport = readFileContentsOrNull(Path.of(RESOURCES_PATH, "y.2021.csv"));
         if (csvYearlyReport != null) {
             accounting.fillYearlyReport(csvYearlyReport);
         }
     }
 
-    private static String readFileContentsOrNull(String path) {
+    private static String readFileContentsOrNull(Path path) {
         try {
-            return Files.readString(Path.of(path));
+            return Files.readString(path);
         } catch (IOException e) {
             System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл не находится в нужной директории.");
             return null;
         }
     }
 }
-
