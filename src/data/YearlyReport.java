@@ -24,12 +24,12 @@ public class YearlyReport {
      * @param income  Прибыль за месяц.
      */
     public void addMonthData(int month, Integer expense, Integer income) {
+        MonthData monthData = new MonthData(expense, income);
         if (month < 1 || month > 12) {
             System.out.println("Ошибка! Номер месяца должен быть в диапазоне [1, 12].");
         } else if (dataHashMap.containsKey(month)) {
-            System.out.println("Данные за этот месяц уже присутствуют в отчёте.");
+            dataHashMap.replace(month, monthData);
         } else {
-            MonthData monthData = new MonthData(expense, income);
             dataHashMap.put(month, monthData);
         }
     }
